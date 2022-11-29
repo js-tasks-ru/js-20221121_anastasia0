@@ -7,8 +7,16 @@
 
 
 export function sortStrings(arr, param = 'asc') {
-  const collator = new Intl.Collator('ru-en', { caseFirst: 'upper'});
-  const arrCopy = [...arr];
-  const arrAsc = arrCopy.sort(collator.compare);
-  return param === 'asc' ? arrAsc : arrAsc.reverse();
+  const directions = {
+    asc: 1,
+    desc: -1
+  };
+  const direction = directions[param];
+
+  return [...arr].sort((str1, str2) => {
+    return direction * str1.localeCompare(str2,
+      ['ru', 'en'],
+      {caseFirst: 'upper'});
+  });
+
 }
